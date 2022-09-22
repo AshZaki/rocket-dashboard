@@ -1,4 +1,4 @@
-import DashboardHeader from "./components/DashboardHeader";
+import { useQuery, gql } from "@apollo/client";
 import { library } from "@fortawesome/fontawesome-svg-core";
 import { 
   faCheckSquare, 
@@ -15,8 +15,10 @@ import {
   faArrowUp,
   faArrowDown,
  } from "@fortawesome/free-solid-svg-icons";
+
+//Components
+import DashboardHeader from "./components/DashboardHeader";
 import Content from "./components/Content";
-import { useQuery, gql } from "@apollo/client";
 
 const LAUNCH_DETAILS_QUERY = gql`
   query LAUNCH_DETAILS_QUERY {

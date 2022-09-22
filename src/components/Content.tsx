@@ -1,5 +1,4 @@
-import { Card, DropdownButton } from "./shared";
-import PayloadCount from "./PayloadCount";
+//Components
 import DataTable from "./DataTable";
 import PayloadDisplay from "./PayloadDisplay";
 import { PayloadDetails } from "../App";
@@ -33,9 +32,9 @@ const calculateAverageMass = (payloadDetails: PayloadDetails[]) => {
 };
 
 function Content({ launchDetails, payloadDetails }: ContentProps) {
-  console.log(payloadDetails)
+
   return (
-    <div className="">
+    <>
       <PayloadDisplay 
         totalPayloads={payloadDetails.length}
         averagePayloadMass={calculateAverageMass(payloadDetails)}
@@ -45,7 +44,7 @@ function Content({ launchDetails, payloadDetails }: ContentProps) {
       <DataTable
         launchDetails={launchDetails}
       />
-    </div>
+    </>
   );
 }
 

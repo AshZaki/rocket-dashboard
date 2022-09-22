@@ -1,6 +1,8 @@
-import { Fragment, useState } from "react";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useState } from "react";
 import { DateTime } from "luxon";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
+//Components
 import SearchBar from './shared/SearchBar';
 import { LaunchDetails } from "../App";
 
@@ -30,9 +32,7 @@ const DataTable = ({ launchDetails }: DataTableProps) => {
         setSearchResults(results);
     };
 
-    console.log("searchResults", searchResults);
     const onInputChange = (e: any) => {
-        console.log('val is ', e);
         setSearchVal(e);
         filterLaunchesData(e);
     };
@@ -98,23 +98,25 @@ const DataTable = ({ launchDetails }: DataTableProps) => {
                 t.mission_name === value.mission_name && t.id === value.id)))
         .map((launch: any) => {
             const { id, mission_name, mission_id, launch_date_utc, rocket, launch_site, launch_success } = launch;
+            const formatDateTime = DateTime.fromISO(launch_date_utc).toFormat('yyyy-LL-dd , hh:mm a');
+            const isLaunchSuccess = launch_success ? <span className="text-teal-500 dark:text-[rgb(94,234,212)] font-semibold">Success</span> : <span className="text-rose-800 dark:text-[rgb(244,63,94)] font-semibold">Failure</span>;
             return (
-                <tr key={id} className="border-b dark:border-[rgb(51,51,51)]">
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{mission_name}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{DateTime.fromISO(launch_date_utc).toFormat('yyyy-LL-dd , hh:mm a')}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{launch_success ? <span className="text-teal-500 font-semibold">Success</span> : <span className="text-rose-800 font-semibold">Failure</span>}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{rocket.rocket_name}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{launch_site.site_name}</td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{mission_id}</td>
+                <tr key={id} className="border-b dark:border-[rgb(43,43,43)]">
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-[rgb(153,153,153)]">{mission_name}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-[rgb(153,153,153)]">{formatDateTime}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{isLaunchSuccess}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-[rgb(153,153,153)]">{rocket.rocket_name}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-[rgb(153,153,153)]">{launch_site.site_name}</td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-[rgb(153,153,153)]">{mission_id}</td>
                 </tr>
             );
         });
 
     return (
-        <div className="divide-y-4 divide-gray-50 dark:divide-[rgb(51,51,51)]">
-            <div className="bg-white dark:bg-[rgb(43,43,43)] divide-gray-300 px-1 py-1 dark:divide-[rgb(51,51,51)]">
+        <div className="divide-y-4 divide-gray-50 dark:divide-[rgb(43,43,43)]">
+            <div className="bg-white dark:bg-[rgb(51,51,51)] divide-gray-300 px-1 py-1 rounded-lg">
                 <div className="inline-flex justify-between gap-x-3 items-center py-4 pl-5 pr-5 w-full">
-                    <div className="font-bold text-2xl ">
+                    <div className="font-bold text-2xl dark:text-white">
                         SpaceX Launch Data
                     </div>
                     <div>
@@ -122,7 +124,7 @@ const DataTable = ({ launchDetails }: DataTableProps) => {
                     </div>
                 </div>
             </div>
-            <div className="bg-white dark:bg-[rgb(43,43,43)] divide-gray-300 dark:divide-[rgb(51,51,51)] px-1 py-1">
+            <div className="bg-white dark:bg-[rgb(51,51,51)] px-1 py-1">
                 <div className="py-4 pl-5 pr-5">
                     <SearchBar
                         searchTerms={searchVal}
@@ -139,7 +141,7 @@ const DataTable = ({ launchDetails }: DataTableProps) => {
                                 <table className="min-w-full">
                                     <thead>
                                         <tr className="dark:border-[rgb(51,51,51)]">
-                                            <th scope="col" className="inline-flex gap-1 text-sm Semi-Bold 14/20 text-gray-900 px-6 py-4 text-left">
+                                            <th scope="col" className="inline-flex gap-1 text-sm Semi-Bold 14/20 text-gray-900 dark:text-white px-4 py-4 text-left">
                                                 <button type="button"
                                                     onClick={() => toggleSortColumn(setIsMissionNameSorted, 'mission_name')}
                                                     className="inline-flex items-center gap-3 px-2 py-0 ">
@@ -153,7 +155,7 @@ const DataTable = ({ launchDetails }: DataTableProps) => {
                                                     }
                                                 </button>
                                             </th>
-                                            <th scope="col" className="text-sm Semi-Bold 14/20 text-gray-900 px-6 py-4 text-left">
+                                            <th scope="col" className="text-sm Semi-Bold 14/20 text-gray-900 dark:text-white px-6 py-4 text-left">
                                                 <button type="button"
                                                     onClick={() => toggleSortColumn(setIsDateSorted, 'launch_date_utc')}
                                                     className="inline-flex items-center gap-3 px-2 py-0 ">
@@ -167,7 +169,7 @@ const DataTable = ({ launchDetails }: DataTableProps) => {
                                                     }
                                                 </button>
                                             </th>
-                                            <th scope="col" className="inline-flex gap-1 text-sm Semi-Bold 14/20 text-gray-900 px-6 py-4 text-left">
+                                            <th scope="col" className="inline-flex gap-1 text-sm Semi-Bold 14/20 text-gray-900 dark:text-white px-6 py-4 text-left">
                                                 <button type="button"
                                                     onClick={() => toggleSortColumn(setIsOutcomeSorted, 'launch_success')}
                                                     className="inline-flex items-center gap-3 px-2 py-0 ">
@@ -181,7 +183,7 @@ const DataTable = ({ launchDetails }: DataTableProps) => {
                                                     }
                                                 </button>
                                             </th>
-                                            <th scope="col" className="text-sm Semi-Bold 14/20 text-gray-900 px-6 py-4 text-left">
+                                            <th scope="col" className="text-sm Semi-Bold 14/20 text-gray-900 dark:text-white px-6 py-4 text-left">
                                                 <button type="button"
                                                     onClick={() => toggleSortColumn(setIsRocketSorted, 'rocket_name')}
                                                     className="inline-flex items-center gap-3 px-2 py-0 ">
@@ -195,7 +197,7 @@ const DataTable = ({ launchDetails }: DataTableProps) => {
                                                     }
                                                 </button>
                                             </th>
-                                            <th scope="col" className="text-sm Semi-Bold 14/20 text-gray-900 px-6 py-4 text-left">
+                                            <th scope="col" className="text-sm Semi-Bold 14/20 text-gray-900 dark:text-white px-6 py-4 text-left">
                                                 <button type="button"
                                                     onClick={() => toggleSortColumn(setIsSiteSorted, 'site_name')}
                                                     className="inline-flex items-center gap-3 px-2 py-0 ">
@@ -209,7 +211,7 @@ const DataTable = ({ launchDetails }: DataTableProps) => {
                                                     }
                                                 </button>
                                             </th>
-                                            <th scope="col" className="text-sm Semi-Bold 14/20 text-gray-900 px-6 py-4 text-left">
+                                            <th scope="col" className="text-sm Semi-Bold 14/20 text-gray-900 dark:text-white px-6 py-4 text-left">
                                                 <button type="button"
                                                     onClick={() => toggleSortColumn(setIsMissionIdSorted, 'mission_id')}
                                                     className="inline-flex items-center gap-3 px-2 py-0 ">

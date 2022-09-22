@@ -2,7 +2,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ArcElement, Chart, Tooltip } from 'chart.js'
 import { Doughnut } from 'react-chartjs-2';
 
-
 interface PayloadDetails {
   nationality: string;
 }
@@ -55,7 +54,8 @@ const PayloadCount = ({ payloadDetails }: PayloadCountProps) => {
     '#FFCE56',
     '#FF6384',
     '#36A2EB',
-  ]
+  ];
+
   const donutChartData = {
     labels: countries,
     datasets: [
@@ -65,27 +65,28 @@ const PayloadCount = ({ payloadDetails }: PayloadCountProps) => {
         backgroundColor: colors,
       },
     ]
-  }
+  };
+
   const test = () => {
-    const rows = []
+    const rows = [];
     console.log(countedNationalities)
     for (const nation in countedNationalities) {
-      if (nation !== 'null') {
+      if (nation !== "null") {
         rows.push(
-          <tr key={nation} className="border-b">
-            <td className="px-6 py-2 divide-gray-50 whitespace-nowrap text-sm font-medium text-gray-900">{nation}</td>
-            <td className="px-6 py-2 divide-gray-50 whitespace-nowrap text-sm font-medium text-gray-900">{countedNationalities[nation]}</td>
+          <tr key={nation} className="border-b dark:border-[rgb(43,43,43)]">
+            <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-[rgb(153,153,153)]">{nation}</td>
+            <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-[rgb(153,153,153)]">{countedNationalities[nation]}</td>
           </tr>
         );
       }
     }
     return rows;
-  }
+  };
 
   return (
-    <div className="bg-white divide-gray-50 divide-y-4 max-h-50 shadow-md rounded-lg">
+    <div className="bg-white dark:bg-[rgb(51,51,51)] divide-gray-50 dark:divide-[rgb(43,43,43)] divide-y-4 max-h-50 shadow-md rounded-lg">
       <div className="inline-flex gap-x-3 items-center">
-        <h1 className="font-bold text-2xl py-4 pl-5">
+        <h1 className="font-bold text-2xl py-4 pl-5 dark:text-white">
           Payload Count By Nationality
         </h1>
         <div>
@@ -97,28 +98,27 @@ const PayloadCount = ({ payloadDetails }: PayloadCountProps) => {
           <div>
             <Doughnut data={donutChartData} updateMode="resize" options={{
               responsive: true,
-              cutout: '90%',
+              cutout: "90%",
               maintainAspectRatio: false,
               elements: {
                 arc: {
-                  borderJoinStyle: 'round',
+                  borderJoinStyle: "round",
                   borderRadius(ctx, options) {
                     return 15;
                   },
                   
                 },
-              },
-              
+              }, 
             }}/>
           </div>
           <div className="overflow-auto inline-block mb-[2rem]">
             <table className="min-w-full">
               <thead className="">
                 <tr>
-                  <th scope="col" className="text-sm font-bold text-[rgba(28,31,55,1)] px-6 py-4 text-left uppercase">
+                  <th scope="col" className="text-sm font-bold text-[rgba(28,31,55,1)] dark:text-white px-6 py-4 text-left uppercase">
                     Nationality
                   </th>
-                  <th scope="col" className="text-sm font-bold text-[rgba(28,31,55,1)] px-6 py-4 text-left uppercase">
+                  <th scope="col" className="text-sm font-bold text-[rgba(28,31,55,1)] dark:text-white px-6 py-4 text-left uppercase">
                     Payload Count
                   </th>
                 </tr>
@@ -130,10 +130,8 @@ const PayloadCount = ({ payloadDetails }: PayloadCountProps) => {
           </div>
         </div>
       </div>
-
     </div>
-
   );
-}
+};
 
 export default PayloadCount;

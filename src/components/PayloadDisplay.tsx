@@ -1,6 +1,6 @@
-import { Card, DropdownButton } from "./shared";
+//Components
+import { Card } from "./shared";
 import PayloadCount from "./PayloadCount";
-import DataTable from "./DataTable";
 import { PayloadDetails } from "../App";
 
 interface PayloadDisplayProps {
@@ -9,8 +9,9 @@ interface PayloadDisplayProps {
     averagePayloadMass: number;
     totalPayloadsCustomers: number;
 }
+
 function PayloadDisplay({ payloadDetails, totalPayloads, averagePayloadMass, totalPayloadsCustomers }: PayloadDisplayProps) {
-    console.log(totalPayloads, averagePayloadMass, totalPayloadsCustomers)
+
     return (
         <div className="mb-4">
             <div className="grid grid-cols-2 gap-4 box-border">

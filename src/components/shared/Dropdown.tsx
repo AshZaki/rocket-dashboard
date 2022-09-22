@@ -1,7 +1,6 @@
+import { useEffect, useState } from 'react'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Menu, Switch } from '@headlessui/react'
-
-import { useEffect, useState } from 'react'
 
 interface DropdownButtonProps {
     name?: string;
@@ -25,19 +24,18 @@ const DropdownButton = ({
         }
     }, [darkTheme])
 
-    console.log({darkTheme})
     return (
         <Menu as="div" className="relative inline-block text-left">
-            <Menu.Button className="inline-block w-full justify-center rounded-md shadow-md bg-white px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 h-10">
+            <Menu.Button className="inline-block w-full justify-center rounded-md shadow-md bg-white dark:bg-[rgb(51,51,51)] px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 h-10">
                 {icon && <FontAwesomeIcon icon={icon} color="rgb(10,129,195)" />}
                 {name && <div className="text-[rgb(10,129,195)] gap-x-4">{name}</div>}
             </Menu.Button>
-            <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-200 rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Menu.Items className="absolute right-0 mt-2 w-56 origin-top-right divide-y divide-gray-200 dark:divide-[rgb(51,51,51)] rounded-md bg-white dark:bg-black shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
                 <div className="px-1 py-1">
                     <Menu.Item>
                         {({ active }) => (
                             <div className="inline-flex items-center justify-between">
-                                <div className="flex text-gray-900 group items-center rounded-md px-2 py-2 text-sm">
+                                <div className="flex text-gray-900 dark:text-[rgb(153,153,153)] group items-center rounded-md px-2 py-2 text-sm">
                                     Light / Dark Theme
                                 </div>
                                 <Switch
@@ -60,7 +58,7 @@ const DropdownButton = ({
                 <div className="px-1 py-1">
                     <Menu.Item>
                         {({ active }) => (
-                            <div className="text-gray-900 group flex w-full items-center rounded-md px-2 py-2 text-sm">
+                            <div className="text-gray-900 dark:text-[rgb(153,153,153)] group flex w-full items-center rounded-md px-2 py-2 text-sm">
                                 Logout
                             </div>
                         )}
