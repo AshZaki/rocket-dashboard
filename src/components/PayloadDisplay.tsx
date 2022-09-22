@@ -1,9 +1,10 @@
 import { Card, DropdownButton } from "./shared";
 import PayloadCount from "./PayloadCount";
 import DataTable from "./DataTable";
+import { PayloadDetails } from "../App";
 
 interface PayloadDisplayProps {
-    payloadDetails: Object[];
+    payloadDetails: PayloadDetails[];
     totalPayloads: number;
     averagePayloadMass: number;
     totalPayloadsCustomers: number;

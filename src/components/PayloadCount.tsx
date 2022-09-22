@@ -1,13 +1,26 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { ArcElement, Chart, Tooltip } from 'chart.js'
+import { Doughnut } from 'react-chartjs-2';
+
+
+interface PayloadDetails {
+  nationality: string;
+}
 
 interface PayloadCountProps {
   number?: number;
   description?: string;
-  payloadDetails: any;
+  payloadDetails: PayloadDetails[];
 }
+interface NationalityCount {
+  [key: string]: number;
+}
+
+Chart.register(ArcElement, Tooltip);
+
 const PayloadCount = ({ payloadDetails }: PayloadCountProps) => {
 
-  const nationaltiesPayload = payloadDetails.reduce((acc: any, payload: any) => {
+  const countedNationalities: NationalityCount = payloadDetails.reduce((acc: any, payload: any) => {
     if (!(acc[payload.nationality])) {
       acc[payload.nationality] = 1;
     }
@@ -16,14 +29,52 @@ const PayloadCount = ({ payloadDetails }: PayloadCountProps) => {
     return acc
   }, {});
 
-  const test = (nationaltiesPayload: any) => {
+  const countries = Object.keys(countedNationalities);
+  const counts = Object.values(countedNationalities);
+  const colors = [
+    '#FF6384',
+    '#36A2EB',
+    '#FFCE56',
+    '#FF6384',
+    '#36A2EB',
+    '#FFCE56',
+    '#FF6384',
+    '#36A2EB',
+    '#FFCE56',
+    '#FF6384',
+    '#36A2EB',
+    '#FFCE56',
+    '#FF6384',
+    '#36A2EB',
+    '#FFCE56',
+    '#FF6384',
+    '#36A2EB',
+    '#FFCE56',
+    '#FF6384',
+    '#36A2EB',
+    '#FFCE56',
+    '#FF6384',
+    '#36A2EB',
+  ]
+  const donutChartData = {
+    labels: countries,
+    datasets: [
+      {
+        radius: "60%",  
+        data: counts,
+        backgroundColor: colors,
+      },
+    ]
+  }
+  const test = () => {
     const rows = []
-    for (const nation in nationaltiesPayload) {
+    console.log(countedNationalities)
+    for (const nation in countedNationalities) {
       if (nation !== 'null') {
         rows.push(
           <tr key={nation} className="border-b">
             <td className="px-6 py-2 divide-gray-50 whitespace-nowrap text-sm font-medium text-gray-900">{nation}</td>
-            <td className="px-6 py-2 divide-gray-50 whitespace-nowrap text-sm font-medium text-gray-900">{nationaltiesPayload[nation]}</td>
+            <td className="px-6 py-2 divide-gray-50 whitespace-nowrap text-sm font-medium text-gray-900">{countedNationalities[nation]}</td>
           </tr>
         );
       }
@@ -44,7 +95,21 @@ const PayloadCount = ({ payloadDetails }: PayloadCountProps) => {
       <div className="px-1 py-1">
         <div className="grid grid-cols-2 h-[17rem]">
           <div>
-            Donut chart
+            <Doughnut data={donutChartData} updateMode="resize" options={{
+              responsive: true,
+              cutout: '90%',
+              maintainAspectRatio: false,
+              elements: {
+                arc: {
+                  borderJoinStyle: 'round',
+                  borderRadius(ctx, options) {
+                    return 15;
+                  },
+                  
+                },
+              },
+              
+            }}/>
           </div>
           <div className="overflow-auto inline-block mb-[2rem]">
             <table className="min-w-full">
@@ -59,7 +124,7 @@ const PayloadCount = ({ payloadDetails }: PayloadCountProps) => {
                 </tr>
               </thead>
               <tbody>
-                {test(nationaltiesPayload)}
+                {test()}
               </tbody>
             </table>
           </div>

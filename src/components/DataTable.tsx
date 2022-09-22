@@ -10,7 +10,7 @@ interface DataTableProps {
 
 const DataTable = ({ launchDetails }: DataTableProps) => {
     const [searchVal, setSearchVal] = useState('');
-    const [missionLaunches, setMissionLaunches] = useState(launchDetails);
+    const [missionLaunches] = useState(launchDetails);
     const [searchResults, setSearchResults] = useState<LaunchDetails[]>(launchDetails);
     const [isMissionNameSorted, setIsMissionNameSorted] = useState(false);
     const [isDateSorted, setIsDateSorted] = useState(false);
@@ -38,6 +38,13 @@ const DataTable = ({ launchDetails }: DataTableProps) => {
     };
 
     const toggleSortColumn = (setIsSorted: (arg: boolean) => void, columnName: string) => {
+        setIsMissionIdSorted(false);
+        setIsMissionNameSorted(false);
+        setIsDateSorted(false);
+        setIsOutcomeSorted(false);
+        setIsRocketSorted(false);
+        setIsSiteSorted(false);
+
         setIsSorted(true);
         if (colSortDirection === 'asc') {
             setColSortDir('desc');
