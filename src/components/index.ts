@@ -1,11 +1,11 @@
 import DashboardHeader from "./DashboardHeader";
-import PayloadCount from "./PayloadCount";
-import DataTable from "./DataTable";
-import PayloadDisplay from "./PayloadDisplay";
+import LaunchData from "./launchData";
+import PayloadCount from "./payload/PayloadCount";
+import PayloadDisplay from "./payload";
 
 export { 
     DashboardHeader,
+    LaunchData,
     PayloadCount,
-    DataTable,
-    PayloadDisplay
+    PayloadDisplay,
 };

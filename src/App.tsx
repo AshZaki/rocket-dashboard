@@ -72,8 +72,22 @@ export interface PayloadDetails {
 }
 
 function App() {
-  library.add(faCheckSquare, faGear, faCog, faBuilding, faChevronDown, faChevronRight, faCircleQuestion, faBoxArchive, faScaleBalanced, faCircleUser, faMaximize, faArrowDown, faArrowUp);
-  
+  library.add(
+    faArrowDown,
+    faArrowUp,
+    faBoxArchive,
+    faBuilding,
+    faCheckSquare,
+    faChevronDown,
+    faChevronRight,
+    faCircleQuestion,
+    faCircleUser,
+    faCog,
+    faGear,
+    faMaximize,
+    faScaleBalanced,
+  );  
+
   const launchDetailsQuery = useQuery(LAUNCH_DETAILS_QUERY);
   const payloadsQuery = useQuery(PAYLOADS_QUERY);
 

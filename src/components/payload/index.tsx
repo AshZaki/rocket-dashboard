@@ -1,7 +1,7 @@
 //Components
-import { Card } from "./shared";
+import { Card } from "../shared";
 import PayloadCount from "./PayloadCount";
-import { PayloadDetails } from "../App";
+import { PayloadDetails } from "../../App";
 
 interface PayloadDisplayProps {
     payloadDetails: PayloadDetails[];

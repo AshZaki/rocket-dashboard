@@ -2,6 +2,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { ArcElement, Chart, Tooltip } from 'chart.js'
 import { Doughnut } from 'react-chartjs-2';
 
+//Component
+import PayloadTableBody from "./PayloadTableBody";
+
 interface PayloadDetails {
   nationality: string;
 }
@@ -69,14 +72,15 @@ const PayloadCount = ({ payloadDetails }: PayloadCountProps) => {
 
   const test = () => {
     const rows = [];
-    console.log(countedNationalities)
+
     for (const nation in countedNationalities) {
       if (nation !== "null") {
         rows.push(
-          <tr key={nation} className="border-b dark:border-[rgb(43,43,43)]">
-            <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-[rgb(153,153,153)]">{nation}</td>
-            <td className="px-6 py-2 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-[rgb(153,153,153)]">{countedNationalities[nation]}</td>
-          </tr>
+          <PayloadTableBody
+            key={nation}
+            nation={nation} 
+            countedNationalities={countedNationalities[nation]}
+          />
         );
       }
     }
@@ -96,20 +100,23 @@ const PayloadCount = ({ payloadDetails }: PayloadCountProps) => {
       <div className="px-1 py-1">
         <div className="grid grid-cols-2 h-[17rem]">
           <div>
-            <Doughnut data={donutChartData} updateMode="resize" options={{
-              responsive: true,
-              cutout: "90%",
-              maintainAspectRatio: false,
-              elements: {
-                arc: {
-                  borderJoinStyle: "round",
-                  borderRadius(ctx, options) {
-                    return 15;
+            <Doughnut 
+              data={donutChartData} 
+              updateMode="resize" 
+              options={{
+                responsive: true,
+                cutout: "90%",
+                maintainAspectRatio: false,
+                elements: {
+                  arc: {
+                    borderJoinStyle: "round",
+                    borderRadius(ctx, options) {
+                      return 15;
+                    },
                   },
-                  
-                },
-              }, 
-            }}/>
+                }, 
+              }}
+            />
           </div>
           <div className="overflow-auto inline-block mb-[2rem]">
             <table className="min-w-full">

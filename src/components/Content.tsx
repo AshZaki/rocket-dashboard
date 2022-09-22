@@ -1,12 +1,15 @@
 //Components
-import DataTable from "./DataTable";
-import PayloadDisplay from "./PayloadDisplay";
+import LaunchData from "./launchData";
+import PayloadDisplay from "./payload";
+
+//Interface
 import { PayloadDetails } from "../App";
 
 interface ContentProps {
   launchDetails: any;
   payloadDetails: PayloadDetails[];
 }
+
 const getTotalCustomers = (payloadDetails: PayloadDetails[]) => {
   const customerDictionary: any = {};
   payloadDetails.forEach((payload: PayloadDetails) => {
@@ -31,7 +34,7 @@ const calculateAverageMass = (payloadDetails: PayloadDetails[]) => {
   return Math.round(totalMass / payloadDetails.length);
 };
 
-function Content({ launchDetails, payloadDetails }: ContentProps) {
+const Content = ({ launchDetails, payloadDetails }: ContentProps) => {
 
   return (
     <>
@@ -41,7 +44,7 @@ function Content({ launchDetails, payloadDetails }: ContentProps) {
         totalPayloadsCustomers={getTotalCustomers(payloadDetails)}
         payloadDetails={payloadDetails}
       />
-      <DataTable
+      <LaunchData
         launchDetails={launchDetails}
       />
     </>
