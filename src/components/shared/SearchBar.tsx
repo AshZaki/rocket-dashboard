@@ -1,11 +1,55 @@
-
+import { useState, useCallback, useRef, useEffect } from "react";
 export interface SearchBarProps {
+  onSearch: (search: string) => void;
+  onReset: () => void;
+  searchTerms: string;
+  maxLength?: number;
   placeholder?: string;
 }
 
-function SearchBar({ placeholder }: SearchBarProps) {
+function SearchBar({ 
+  placeholder,
+  onSearch,
+  onReset,
+  searchTerms,
+  maxLength = 40
+}: SearchBarProps) {
+
+  const [inputValue, setInputValue] = useState(searchTerms);
+  const inputRef = useRef(null);
+
+  useEffect(() => {
+    setInputValue(searchTerms);
+  }, [searchTerms]);
+
+  const handleSearch = useCallback(() => {
+    onSearch(inputValue);
+  }, [inputValue, onSearch]);
+
+  const handleOnChange = useCallback((e: any) => {
+    setInputValue(e.target.value);
+    
+  }, []);
+
+  const handleOnKeyDown = useCallback((e: any) => {
+    if (e.key === "Enter") {
+      onSearch(inputValue);
+    }
+    else if (e.key === "Escape") {
+      setInputValue("");
+      handleOnReset();
+    }
+  }, [inputValue, onSearch, onReset]);
+
+  const handleOnReset = useCallback(() => {
+    setInputValue("");
+    onReset();
+    // inputRef.current.focus();
+  }, []);
+
+  
   return (
-    <form className="w-full">
+    <form className="w-full" onSubmit={e => { e.preventDefault(); }}>
       <div className="relative">
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -22,9 +66,14 @@ function SearchBar({ placeholder }: SearchBarProps) {
           />
         </svg>
         <input
-          type="text"
-          placeholder="Search by Mission Name"
           className="w-full py-3 pl-12 pr-4 text-gray-500 rounded-lg outline-none bg-gray-50"
+          type="text"
+          ref={inputRef}
+          value={inputValue}
+          onChange={handleOnChange}
+          maxLength={maxLength}
+          onKeyDown={handleOnKeyDown}
+          placeholder={placeholder}
         />
       </div>
     </form>
