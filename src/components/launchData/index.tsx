@@ -15,7 +15,7 @@ interface LaunchDataProps {
 const LaunchData = ({ launchDetails }: LaunchDataProps) => {
     const [searchVal, setSearchVal] = useState('');
     const [missionLaunches] = useState(launchDetails);
-    const [searchResults, setSearchResults] = useState<LaunchDetails[]>(launchDetails);
+    const [filterLaunch, setfilterLaunch] = useState<LaunchDetails[]>(launchDetails);
 
     const filterLaunchesData = (val: string) => {
         const results = missionLaunches.filter((launch: LaunchDetails) => {
@@ -24,7 +24,7 @@ const LaunchData = ({ launchDetails }: LaunchDataProps) => {
                 return launch;
             }
         })
-        setSearchResults(results);
+        setfilterLaunch(results);
     };
 
     const onInputChange = (e: any) => {
@@ -32,7 +32,7 @@ const LaunchData = ({ launchDetails }: LaunchDataProps) => {
         filterLaunchesData(e);
     };
 
-    const details = searchResults
+    const renderFilter = filterLaunch
         .filter((value, index, self) =>
             index === self.findIndex((t) => (
                 t.mission_name === value.mission_name && t.id === value.id)))
@@ -77,7 +77,7 @@ const LaunchData = ({ launchDetails }: LaunchDataProps) => {
                 </div>
                 <DataTable
                     launchDetails={launchDetails}
-                    tableBody={details}
+                    tableBody={renderFilter}
                 />
             </div>
         </div>

@@ -1,7 +1,9 @@
 import { useState } from "react";
+import { DateTime } from "luxon";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { LaunchDetails } from "../../App";
+import DataTableBody from "./DataTableBody";
 
 interface DataTableProps {
     launchDetails: LaunchDetails[];
@@ -10,7 +12,7 @@ interface DataTableProps {
 
 const DataTable = ({ launchDetails, tableBody }: DataTableProps) => {
     const [missionLaunches] = useState(launchDetails);
-    const [searchResults, setSearchResults] = useState<LaunchDetails[]>(launchDetails);
+    const [sortedLaunch, setsortedLaunch] = useState<LaunchDetails[]>(launchDetails);
     const [isMissionNameSorted, setIsMissionNameSorted] = useState(false);
     const [isDateSorted, setIsDateSorted] = useState(false);
     const [isOutcomeSorted, setIsOutcomeSorted] = useState(false);
@@ -48,7 +50,7 @@ const DataTable = ({ launchDetails, tableBody }: DataTableProps) => {
                 }
             })
 
-            setSearchResults(sortedMissions);
+            setsortedLaunch(sortedMissions);
             return sortedMissions;
         } else {
             setColSortDir('asc');
@@ -69,10 +71,31 @@ const DataTable = ({ launchDetails, tableBody }: DataTableProps) => {
                         return b.mission_name.toLocaleLowerCase().localeCompare(a.mission_name.toLocaleLowerCase());
                 }
             })
-            setSearchResults(sortedMissions);
+            setsortedLaunch(sortedMissions);
             return sortedMissions;
         }
     }
+
+    const renderSortedLaunchDetail = sortedLaunch
+        .filter((value, index, self) =>
+            index === self.findIndex((t) => (
+                t.mission_name === value.mission_name && t.id === value.id)))
+        .map((launch: any) => {
+            const { id, mission_name, mission_id, launch_date_utc, rocket, launch_site, launch_success } = launch;
+            const formatDateTime = DateTime.fromISO(launch_date_utc).toFormat('yyyy-LL-dd , hh:mm a');
+            const isLaunchSuccess = launch_success ? <span className="text-teal-500 dark:text-[rgb(94,234,212)] font-semibold">Success</span> : <span className="text-rose-800 dark:text-[rgb(244,63,94)] font-semibold">Failure</span>;
+            return (
+                <DataTableBody
+                    id={id}
+                    missionName={mission_name}
+                    launchDateTime={formatDateTime}
+                    isLaunchSuccess={isLaunchSuccess}
+                    rocketName={rocket.rocket_name}
+                    siteName={launch_site.site_name}
+                    missionId={mission_id}
+                />
+            );
+        });
 
     return (
         <div className="flex flex-col pl-5 pr-5">
@@ -169,7 +192,7 @@ const DataTable = ({ launchDetails, tableBody }: DataTableProps) => {
                                 </tr>
                             </thead>
                             <tbody>
-                                {tableBody}
+                                {renderSortedLaunchDetail}
                             </tbody>
                         </table>
                     </div>
